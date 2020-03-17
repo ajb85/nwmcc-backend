@@ -1,10 +1,10 @@
-// use environment variables
+// Import environment variables
 require('dotenv').config();
 
-// Automated error handling
+// Automate error handling for error codes >= 500
 require('express-async-errors');
 
-// Allow absolute imports
+// Allow absolute imports (server.js vs ./server.js)
 require('app-module-path').addPath(__dirname);
 
 const server = require('server.js');
