@@ -2,7 +2,7 @@ import db from '../index.js';
 
 module.exports = {
   find,
-  userLookup,
+  lookup,
   create,
   edit,
   remove
@@ -21,14 +21,16 @@ function find(filter) {
     .where(filter);
 }
 
-function userLookup(filter) {
+function lookup(filter) {
   // More for internal use.  Returns the user's password, which
   // I want to ensure never gets sent back to a client
   if (!filter) {
     return null;
   }
 
-  return db(table).where(filter);
+  return db(table)
+    .where(filter)
+    .first();
 }
 
 function create(data) {
