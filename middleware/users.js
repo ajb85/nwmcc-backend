@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Users = require('models/queries/users.js');
 
 module.exports = {
@@ -16,6 +17,10 @@ async function verifyNewAccount(req, res, next) {
     });
   }
 
+  // Not great to have to run two queries before every account creation
+  // But it does allow me to have custom error messages and
+  // while I could write a single query to handle this case,
+  // I'm going to leave it at two for now because...48 hours :)
   const emailExists = await Users.find({ email }).first();
   const nicknameExists = await Users.find({ nickname }).first();
 
@@ -36,7 +41,7 @@ async function verifyNewAccount(req, res, next) {
   next();
 }
 
-function verifyLogin(req, res, next) {
+async function verifyLogin(req, res, next) {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -45,5 +50,16 @@ function verifyLogin(req, res, next) {
     });
   }
 
+  const user = await Users.lookup({ email });
+
+  if (!user || !bcrypt.compareSync(password, user.password)) {
+    return res.status(401).json({
+      route: 'account/login',
+      message: 'Invalid credentials'
+    });
+  }
+
+  delete user.password;
+  res.locals.user = user;
   next();
 }
