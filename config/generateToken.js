@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const secret = require('./secret.js');
 
-module.exports = user => {
+module.exports = userData => {
+  const { password, ...user } = userData;
   const payload = { ...user };
 
   const options = {
