@@ -1,0 +1,27 @@
+{
+  "name": "nwmcc-backend",
+  "version": "1.0.0",
+  "description": "Backend companion to my coding challenge for Northwestern Mutual",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajb85/nwmcc-backend.git"
+  },
+  "author": "AJ Brush",
+  "bugs": {
+    "url": "https://github.com/ajb85/nwmcc-backend/issues"
+  },
+  "homepage": "https://github.com/ajb85/nwmcc-backend#readme",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^3.21.3",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
