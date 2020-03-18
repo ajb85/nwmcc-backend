@@ -35,7 +35,7 @@ router.post('/:chat_id/join', verifyUserNotInChat, async (req, res) => {
   return res.status(201).json(newChat);
 });
 
-router.post('/:chat_id/message', async (req, res) => {
+router.post('/:chat_id/message', verifyUserInChat, async (req, res) => {
   const { content } = req.body;
   const { id: user_id } = res.locals.user;
   const { chat_id } = req.params;
