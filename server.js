@@ -15,6 +15,10 @@ const errorHandler = require('middleware/errorHandling.js');
 
 server.use('/account', userRoutes);
 
+server.get('/', (req, res) => {
+  return res.status(200).send('Server is online!');
+});
+
 //async error handling middleware MUST come after routes or else will just throw Type error
 server.use(errorHandler);
 
