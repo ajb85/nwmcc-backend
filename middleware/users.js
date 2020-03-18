@@ -34,14 +34,14 @@ async function verifyNewAccount(req, res, next) {
 
   if (emailExists) {
     return res.status(400).json({
-      route: 'account/create',
+      route: 'account/register',
       message: 'An account with that email address already exists.'
     });
   }
 
   if (nicknameExists) {
     return res.status(400).json({
-      route: 'account/create',
+      route: 'account/register',
       message: 'That nickname is already taken.'
     });
   }
