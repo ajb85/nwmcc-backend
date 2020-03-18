@@ -7,8 +7,13 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+// Routes
+const userRoutes = require('controllers/users/');
+
 // Middleware
 const errorHandler = require('middleware/errorHandling.js');
+
+server.use('/account', userRoutes);
 
 //async error handling middleware MUST come after routes or else will just throw Type error
 server.use(errorHandler);
