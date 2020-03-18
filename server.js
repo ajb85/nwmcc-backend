@@ -9,11 +9,14 @@ server.use(cors());
 
 // Routes
 const userRoutes = require('controllers/users/');
+const chatRoutes = require('controllers/chats/');
 
 // Middleware
 const errorHandler = require('middleware/errorHandling.js');
+const auth = require('middleware/authenticate.js');
 
 server.use('/account', userRoutes);
+server.use('/chats', auth, chatRoutes);
 
 server.get('/', (req, res) => {
   return res.status(200).send('Server is online!');
