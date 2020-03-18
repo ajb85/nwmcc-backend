@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const Users = require('models/queries/users.js');
 
 module.exports = {
-  verifyAccountInfo,
+  verifyNewAccount,
   verifyLogin
 };
 
