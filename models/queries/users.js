@@ -1,4 +1,4 @@
-import db from '../index.js';
+const db = require('../index.js');
 
 module.exports = {
   find,
