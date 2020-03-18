@@ -17,7 +17,7 @@ function find(filter) {
     return null;
   }
   return db(table)
-    .select('email', 'nickname')
+    .select('id', 'email', 'nickname')
     .where(filter);
 }
 
