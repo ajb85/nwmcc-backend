@@ -17,6 +17,14 @@ async function verifyNewAccount(req, res, next) {
     });
   }
 
+  const isValidEmail = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  if (!isValidEmail.test(email)) {
+    return res.status(400).json({
+      route: 'account/register',
+      message: 'Invalid email address.'
+    });
+  }
+
   // Not great to have to run two queries before every account creation
   // But it does allow me to have custom error messages and
   // while I could write a single query to handle this case,
@@ -38,6 +46,7 @@ async function verifyNewAccount(req, res, next) {
     });
   }
 
+  req.body.password = bcrypt.hashSync(password, 10);
   next();
 }
 
@@ -51,7 +60,6 @@ async function verifyLogin(req, res, next) {
   }
 
   const user = await Users.lookup({ email });
-
   if (!user || !bcrypt.compareSync(password, user.password)) {
     return res.status(401).json({
       route: 'account/login',
