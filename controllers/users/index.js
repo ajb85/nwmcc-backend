@@ -19,3 +19,5 @@ router.post('/login', verifyLogin, async (req, res) => {
   const token = generateToken(res.locals.user);
   return res.status(200).json({ ...res.locals.user, token });
 });
+
+module.exports = router;
