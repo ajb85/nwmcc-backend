@@ -2,7 +2,8 @@ const Chats = require('models/queries/chats.js');
 
 module.exports = {
   verifyUserInChat,
-  verifyUserNotInChat
+  verifyUserNotInChat,
+  verifyContent
 };
 
 async function verifyUserInChat(req, res, next) {
@@ -38,5 +39,15 @@ async function verifyUserNotInChat(req, res, next) {
       .json({ route: 'chat/join', message: 'You are already in that chat.' });
   }
 
+  next();
+}
+
+function verifyContent(req, res, next) {
+  if (!req.body.content.length) {
+    return res.status(400).json({
+      route: 'chat/message',
+      message: 'Cannot send an empty message.'
+    });
+  }
   next();
 }

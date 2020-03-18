@@ -5,7 +5,8 @@ const Messages = require('models/queries/messages.js');
 
 const {
   verifyUserInChat,
-  verifyUserNotInChat
+  verifyUserNotInChat,
+  verifyContent
 } = require('middleware/chats.js');
 
 router.get('/byUser', async (req, res) => {
@@ -35,14 +36,19 @@ router.post('/:chat_id/join', verifyUserNotInChat, async (req, res) => {
   return res.status(201).json(newChat);
 });
 
-router.post('/:chat_id/message', verifyUserInChat, async (req, res) => {
-  const { content } = req.body;
-  const { id: user_id } = res.locals.user;
-  const { chat_id } = req.params;
+router.post(
+  '/:chat_id/message',
+  verifyUserInChat,
+  verifyContent,
+  async (req, res) => {
+    const { content } = req.body;
+    const { id: user_id } = res.locals.user;
+    const { chat_id } = req.params;
 
-  const newMessage = await Messages.create({ content, chat_id, user_id });
+    const newMessage = await Messages.create({ content, chat_id, user_id });
 
-  return res.sendStatus(201);
-});
+    return res.sendStatus(201);
+  }
+);
 
 module.exports = router;
