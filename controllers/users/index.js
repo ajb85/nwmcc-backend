@@ -1,8 +1,15 @@
 const router = require('express').Router();
 const generateToken = require('config/generateToken.js');
 const { verifyNewAccount, verifyLogin } = require('middleware/users.js');
+const auth = require('middleware/authenticate.js');
 
 const Users = require('models/queries/users.js');
+
+router.get('/', auth, (req, res) => {
+  const { user } = res.locals;
+
+  return res.status(200).json({ ...user });
+});
 
 router.post('/register', verifyNewAccount, async (req, res) => {
   const { email, password, nickname } = req.body;
