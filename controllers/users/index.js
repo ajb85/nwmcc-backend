@@ -4,6 +4,7 @@ const { verifyNewAccount, verifyLogin } = require('middleware/users.js');
 const auth = require('middleware/authenticate.js');
 
 const Users = require('models/queries/users.js');
+const Chats = require('models/queries/chats.js');
 
 router.get('/', auth, (req, res) => {
   const { user } = res.locals;
@@ -17,6 +18,8 @@ router.post('/register', verifyNewAccount, async (req, res) => {
   const newUser = await Users.create({ email, password, nickname });
 
   if (newUser) {
+    // Join default chat by....default
+    await Chats.join(newUser.id, 1);
     const token = generateToken(newUser);
     return res.status(201).json({ ...newUser, token });
   }
