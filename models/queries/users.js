@@ -47,8 +47,10 @@ function edit(newData, filter) {
   return db(table)
     .where(filter)
     .update(newData, ['*'])
-    .then(updated => {
-      const fullData = updated.map(({ id }) => find({ id }).first());
+    .then(async updated => {
+      const fullData = await Promise.all(
+        updated.map(({ id }) => find({ id }).first())
+      );
       return fullData.length === 1 ? fullData[0] : fullData;
     });
 }
