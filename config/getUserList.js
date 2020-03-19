@@ -3,7 +3,9 @@ module.exports = function getUserList(sockets) {
   for (let id in sockets) {
     const s = sockets[id];
     const { user } = s;
-    userlist.push(user.nickname);
+    if (user) {
+      userlist.push(user.nickname);
+    }
   }
 
   return userlist.sort();
