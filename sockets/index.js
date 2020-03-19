@@ -33,9 +33,9 @@ class SocketsManager {
     });
   }
 
-  emitToRoom(socket_id, room, context, message) {
-    console.log(`EMITTING TO ${room}[${context}]: `);
-    this.connected[socket_id].to(room).emit(room, context, message);
+  emitToRoom(room, context, message) {
+    console.log(`EMITTING TO ${room}[${context}]: `, message);
+    this.io.in(room).emit(room, context, message);
   }
 
   join(userData, room, broadcast) {
@@ -64,6 +64,10 @@ class SocketsManager {
     if (config) {
       this.emitToRoom(socket.id, room, config.context, config.message);
     }
+  }
+
+  socketIDFromUserID(user_id) {
+    return this.userToSocket[user_id];
   }
 
   _getSocketIDFromUserData({ user_id, socket_id }) {

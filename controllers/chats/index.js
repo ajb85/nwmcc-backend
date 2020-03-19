@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Chats = require('models/queries/chats.js');
 const Messages = require('models/queries/messages.js');
 
-const Sockets = require('sockets/');
+const sockets = require('sockets/');
 
 const {
   verifyUserInChat,
@@ -46,7 +46,9 @@ router.post(
     const { chat_id } = req.params;
 
     const newMessage = await Messages.create({ content, chat_id, user_id });
-    Sockets.emitToRoom(socket.id, newMessage.chat_id, 'newMessage', newMessage);
+
+    sockets.emitToRoom(newMessage.chat_id, 'newMessage', newMessage);
+
     return res.sendStatus(201);
   }
 );

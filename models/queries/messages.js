@@ -20,7 +20,7 @@ function find(filter) {
     .select('m.*', 'u.nickname as author')
     .where(filter)
     .join('users as u', { 'm.user_id': 'u.id' })
-    .rightJoin('chats as c', { 'm.chat_id': 'c.id' })
+    .join('chats as c', { 'm.chat_id': 'c.id' })
     .orderBy('created_at', 'desc')
     .limit(parseInt(process.env.CHAT_MSG_LIMIT, 10) || 50);
 }
