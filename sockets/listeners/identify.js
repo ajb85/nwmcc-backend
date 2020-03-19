@@ -31,5 +31,5 @@ function getUserList(sockets) {
     userlist.push(user.nickname);
   }
 
-  return userlist;
+  return userlist.sort();
 }
