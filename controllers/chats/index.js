@@ -3,6 +3,8 @@ const router = require('express').Router();
 const Chats = require('models/queries/chats.js');
 const Messages = require('models/queries/messages.js');
 
+const Sockets = require('sockets/');
+
 const {
   verifyUserInChat,
   verifyUserNotInChat,
@@ -22,9 +24,7 @@ router.get('/:chat_id/messages', verifyUserInChat, async (req, res) => {
 
   // The column-reverse used on the frontend means it's best to display
   // the messages in reverse order, thus I reverse before sending back
-  return res
-    .status(200)
-    .json({ messages: messages.reverse(), limit: process.env.CHAT_MSG_LIMIT });
+  return res.status(200).json({ messages, limit: process.env.CHAT_MSG_LIMIT });
 });
 
 router.post('/:chat_id/join', verifyUserNotInChat, async (req, res) => {
@@ -46,7 +46,7 @@ router.post(
     const { chat_id } = req.params;
 
     const newMessage = await Messages.create({ content, chat_id, user_id });
-
+    Sockets.emitToRoom(socket.id, newMessage.chat_id, 'newMessage', newMessage);
     return res.sendStatus(201);
   }
 );
