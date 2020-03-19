@@ -17,8 +17,8 @@ module.exports = function(socket, token) {
           'IDENTIFIED SOCKET: ',
           this.connected[socket.id].user.nickname
         );
-        this.emitToRoom('userlist', getUserList(this.connected));
         this.userToSocket[id] = socket.id;
+        this.emitToRoom('userlist', getUserList(this.connected));
       }
     });
   }
