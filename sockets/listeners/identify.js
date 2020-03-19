@@ -5,6 +5,7 @@
 
 const jwt = require('jsonwebtoken');
 const secret = require('config/secret.js');
+const getUserList = require('config/getUserList.js');
 
 module.exports = function(socket, token) {
   if (!this.connected[socket.id].user && token) {
@@ -22,14 +23,3 @@ module.exports = function(socket, token) {
     });
   }
 };
-
-function getUserList(sockets) {
-  const userlist = [];
-  for (let id in sockets) {
-    const s = sockets[id];
-    const { user } = s;
-    userlist.push(user.nickname);
-  }
-
-  return userlist.sort();
-}
