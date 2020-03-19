@@ -7,7 +7,8 @@ require('express-async-errors');
 // Allow absolute imports (server.js vs ./server.js)
 require('app-module-path').addPath(__dirname);
 
-const server = require('server.js');
-server.listen((port = process.env.PORT || 4500), () =>
+require('api/api.js');
+const http = require('api/http.js');
+http.listen((port = process.env.PORT || 4500), () =>
   console.log(`\n** Running on port ${port} **\n`)
 );
