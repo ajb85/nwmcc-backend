@@ -1,5 +1,5 @@
-const server = require('server.js');
-const io = require('socket.io')(server);
+const http = require('api/http.js');
+const io = require('socket.io')(http);
 const reqDir = require('require-dir');
 const listeners = reqDir('./listeners/');
 
